@@ -150,8 +150,6 @@ De esa forma, la UI se adapte a los permisos de cada tipo de usuario.
 
 1) planes.page: Muestra los planes obtenidos desde Supabase usando el PlanService.
 
-Se crea con el comando: _ionic g page planes --standalone_
-
 2) login.page: Permite entrar con email/contraseña.
 
 3) registro.page: Registra al usuario y lo crea en tabla usuarios con rol “usuario_registrado”.4
@@ -173,11 +171,11 @@ Se crea con el comando: _ionic g page planes --standalone_
 
 Estas paginas se crean usando los siguientes comandos:
 
-_ionic g page pages/login --standalone_
-_ionic g page pages/miscontrataciones --standalone_
-_ionic g page pages/registro --standalone_
-_ionic g page pages/miscontrataciones --standalone_
-_ionic g page pages/dashboard-asesor --standalone_
-_ionic g page pages/crear-editar-plan --standalone_
-_ionic g page pages/chat --standalone_
-_ionic g page pages/plan-detalle_
+- _ionic g page pages/login --standalone_
+- _ionic g page pages/miscontrataciones --standalone_
+- _ionic g page pages/registro --standalone_
+- _ionic g page pages/miscontrataciones --standalone_
+- _ionic g page pages/dashboard-asesor --standalone_
+- _ionic g page pages/crear-editar-plan --standalone_
+- _ionic g page pages/chat --standalone_
+- _ionic g page pages/plan-detalle_

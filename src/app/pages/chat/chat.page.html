@@ -4,14 +4,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
 
-  <div *ngFor="let msg of messages">
-    <ion-card>
-      <ion-card-content>
-        {{ msg.message }}
-      </ion-card-content>
-    </ion-card>
+  <div class="message-container">
+    <div 
+      *ngFor="let msg of messages" 
+      class="message"
+      [ngClass]="msg.from_user === userId ? 'me' : 'other'"
+    >
+      {{ msg.message }}
+    </div>
   </div>
 
 </ion-content>

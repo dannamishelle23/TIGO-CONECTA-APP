@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule, NavController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { IonicModule, NavController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { PlanService } from '../../core/services/plan';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -13,63 +13,49 @@ import { PlanService } from '../../core/services/plan';
 })
 export class CrearEditarPlanPage implements OnInit {
   id: number | null = null;
-  isEditing = false;
-  plan: any = {
-    nombre: '',
-    precio: 0,
-    descripcion: '',
-    activo: true,
-  };
-
-  imagenFile: File | null = null;
-  oldImagePath: string | null = null;
+  nombre = '';
+  precio: number | null = null;
+  descripcion = '';
+  file: File | null = null;
+  oldImage: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private planService: PlanService,
-    private navCtrl: NavController
+    private nav: NavController
   ) {}
 
   async ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
     if (this.id) {
-      this.isEditing = true;
       const planes = await this.planService.getPlanes();
-      const p = planes.find((pl) => pl.id === this.id);
+      const plan = planes.find((p: any) => p.id === this.id);
 
-      if (p) {
-        this.plan = {
-          nombre: p.nombre,
-          precio: p.precio,
-          descripcion: p.descripcion,
-          activo: p.activo,
-        };
-        this.oldImagePath = p.imagen_path;
-      }
+      this.nombre = plan.nombre;
+      this.precio = plan.precio;
+      this.descripcion = plan.descripcion;
+      this.oldImage = plan.imagen_path;
     }
   }
 
-  onImageSelected(event: any) {
-    this.imagenFile = event.target.files[0];
+  onFileSelect(event: any) {
+    this.file = event.target.files[0];
   }
 
   async guardar() {
-    try {
-      if (this.isEditing) {
-        await this.planService.updatePlan(
-          this.id!,
-          this.plan,
-          this.imagenFile || undefined,
-          this.oldImagePath || undefined
-        );
-      } else {
-        await this.planService.createPlan(this.plan, this.imagenFile || undefined);
-      }
+    const data = {
+      nombre: this.nombre,
+      precio: this.precio,
+      descripcion: this.descripcion,
+    };
 
-      this.navCtrl.navigateBack('/tabs/dashboard-asesor');
-    } catch (err) {
-      console.error('Error al guardar:', err);
+    if (this.id) {
+      await this.planService.updatePlan(this.id, data, this.file!, this.oldImage!);
+    } else {
+      await this.planService.createPlan(data, this.file!);
     }
+
+    this.nav.navigateBack('/tabs/dashboard-asesor');
   }
 }
