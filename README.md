@@ -36,7 +36,7 @@ Dentro de src/app se crea una carpeta _core_ y dentro de esta se crean dos carpe
 
 Cada una de estas dos carpetas sigue la siguiente estructura:
 
-### Services
+### 1.- Services
 
 - #### supabase.ts: 
 
@@ -56,9 +56,29 @@ Es responsable del CRUD de planes_moviles, subir/obtener/eliminar imágenes en p
 
 _ionic generate service core/services/plan_
 
-#### chat.ts
+- #### chat.ts
 
 Su función es para enviar mensajes, suscribirse a mensajes_chat con filtros por conversación, manejar indicador "escribiendo..." si se implementa. 
 
 _ionic generate service core/services/chat_
+
+### 2. Guards
+
+- #### auth.guard.ts
+
+Verifica que exista sesión activa; en caso contrario, redirige a /login. Este proteger rutas que requieren autenticación (ej: chat en tiempo real).
+
+_ionic generate guard core/guards/auth_
+
+Se elige la opción: CanActivate
+
+- #### role.guard.ts
+
+Verifica que el usuario autenticado tenga uno de los roles permitidos en la ruta. 
+
+_ionic generate guard core/guards/role_
+
+Elegir también la opción CanActivate 
+
+
 
