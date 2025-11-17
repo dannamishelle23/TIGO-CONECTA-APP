@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ plan?.nombre }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <img *ngIf="plan?.imagen_path"
+       [src]="planService.getImageUrl(plan.imagen_path)"
+       style="width: 100%; border-radius: 12px;" />
+
+  <h2>{{ plan?.nombre }}</h2>
+  <p><strong>Precio:</strong> ${{ plan?.precio }}</p>
+  <p>{{ plan?.descripcion }}</p>
+
+</ion-content>
+
