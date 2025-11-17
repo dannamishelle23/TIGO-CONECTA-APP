@@ -36,7 +36,7 @@ Dentro de src/app se crea una carpeta _core_ y dentro de esta se crean dos carpe
 
 Cada una de estas dos carpetas sigue la siguiente estructura:
 
-### 1.- Services
+### Services
 
 - #### supabase.ts: 
 
@@ -62,7 +62,7 @@ Su función es para enviar mensajes, suscribirse a mensajes_chat con filtros por
 
 _ionic generate service core/services/chat_
 
-### 2. Guards
+### Guards
 
 - #### auth.guard.ts
 
@@ -80,5 +80,33 @@ _ionic generate guard core/guards/role_
 
 Elegir también la opción CanActivate 
 
+### 4. Configuración de variables de entorno (credenciales de Supabase)
 
+Este proyecto utiliza Supabase para autenticación, base de datos, almacenamiento e interacciones en tiempo real. Por motivos de seguridad, es importante que las credenciales reales (URL y ANON KEY) NO sean expuestas en el repositorio.
 
+Por eso, los siguientes archivos: environment.ts y environment.prod.ts están ignorados mediante .gitignore
+
+En la carpeta src/environments/ se encuentran los siguientes archivos:
+
+environment.example.ts
+environment.prod.example.ts
+
+Estos archivos son una plantilla para que cualquiera que descargue el proyecto sepa qué valores debe configurar.
+
+Las credenciales se configuran siguiendo los siguientes pasos:
+
+Duplicar los archivos de ejemplo:
+
+environment.example.ts → environment.ts
+environment.prod.example.ts → environment.prod.ts
+
+Reemplazar los placeholders con la URL y ANON KEY de Supabase reales:
+
+### Ej.
+export const environment = {
+  production: false,
+  supabaseUrl: 'https://YOUR_PROJECT_ID.supabase.co',
+  supabaseAnonKey: 'YOUR_SUPABASE_ANON_KEY'
+};
+
+En environment.prod.ts, cambiar production: true para hacer el build de la APK.
