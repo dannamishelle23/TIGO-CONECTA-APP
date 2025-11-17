@@ -144,7 +144,7 @@ De esa forma, la UI se adapte a los permisos de cada tipo de usuario.
 
 ##### Ejemplo:
 
-![tabs.page.html](imagen1.png)
+![tabs.page.html](images/imagen1.png)
 
 ### c. Creacion de paginas principales
 
