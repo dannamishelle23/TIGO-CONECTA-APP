@@ -1,5 +1,22 @@
-import { CanActivateFn } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { AuthService } from '../services/auth';
 
-export const roleGuard: CanActivateFn = (route, state) => {
-  return true;
-};
+@Injectable({
+  providedIn: 'root',
+})
+export class RoleGuard implements CanActivate {
+  constructor(private auth: AuthService, private router: Router) {}
+
+  async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+    const expectedRoles = route.data['roles'] as string[];
+    const currentRole = await firstValueFrom(this.auth.getRole());
+
+    if (!expectedRoles.includes(currentRole)) {
+      this.router.navigateByUrl('/tabs/planes'); 
+      return false;
+    }
+    return true;
+  }
+}
