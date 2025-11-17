@@ -3,15 +3,20 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.routes').then((m) => m.tabsRoutes),
   },
   {
     path: 'planes',
-    loadComponent: () => import('./planes/planes.page').then( m => m.PlanesPage)
+    loadComponent: () => import('./pages/planes/planes.page').then( m => m.PlanesPage)
   },
   {
     path: 'login',
-    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
+    loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
   },
   {
     path: 'registro',
@@ -19,7 +24,7 @@ export const routes: Routes = [
   },
   {
     path: 'miscontrataciones',
-    loadComponent: () => import('./pages/miscontrataciones/miscontrataciones.page').then( m => m.MiscontratacionesPage)
+    loadComponent: () => import('./pages/miscontrataciones/miscontrataciones.page').then( m => m.MisContratacionesPage)
   },
   {
     path: 'dashboard-asesor',

@@ -15,7 +15,7 @@ export class PlanDetallePage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private planService: PlanService
+    public planService: PlanService
   ) {}
 
   async ngOnInit() {

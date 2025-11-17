@@ -171,9 +171,9 @@ De esa forma, la UI se adapte a los permisos de cada tipo de usuario.
 
 Estas paginas se crean usando los siguientes comandos:
 
+- _ionic g page pages/registro --standalone_
 - _ionic g page pages/login --standalone_
 - _ionic g page pages/miscontrataciones --standalone_
-- _ionic g page pages/registro --standalone_
 - _ionic g page pages/miscontrataciones --standalone_
 - _ionic g page pages/dashboard-asesor --standalone_
 - _ionic g page pages/crear-editar-plan --standalone_
