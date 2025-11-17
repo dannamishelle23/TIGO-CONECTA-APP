@@ -110,3 +110,9 @@ export const environment = {
 };
 
 En environment.prod.ts, cambiar production: true para hacer el build de la APK.
+
+### 5. Configuracion de rutas principales
+
+Esto se hace en tabs.routes.ts ya que, define toda la navegación de la app usando Ionic Tabs. Además,
+aquí se cargan las pantallas según el rol (usuario, asesor) e incluye protecciones usando Role Guard.
+
