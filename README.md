@@ -88,8 +88,8 @@ Por eso, los siguientes archivos: environment.ts y environment.prod.ts están ig
 
 En la carpeta src/environments/ se encuentran los siguientes archivos:
 
-environment.example.ts
-environment.prod.example.ts
+- environment.example.ts
+- environment.prod.example.ts
 
 Estos archivos son una plantilla para que cualquiera que descargue el proyecto sepa qué valores debe configurar.
 
@@ -97,16 +97,16 @@ Las credenciales se configuran siguiendo los siguientes pasos:
 
 Duplicar los archivos de ejemplo:
 
-environment.example.ts → environment.ts
-environment.prod.example.ts → environment.prod.ts
+- environment.example.ts → environment.ts
+- environment.prod.example.ts → environment.prod.ts
 
 Reemplazar los placeholders con la URL y ANON KEY de Supabase reales:
 
-### Ej.
+#### Ejemplo.
 export const environment = {
-  production: false,
-  supabaseUrl: 'https://YOUR_PROJECT_ID.supabase.co',
-  supabaseAnonKey: 'YOUR_SUPABASE_ANON_KEY'
+  - production: false,
+  - supabaseUrl: 'https://YOUR_PROJECT_ID.supabase.co',
+  - supabaseAnonKey: 'YOUR_SUPABASE_ANON_KEY'
 };
 
 En environment.prod.ts, cambiar production: true para hacer el build de la APK.
