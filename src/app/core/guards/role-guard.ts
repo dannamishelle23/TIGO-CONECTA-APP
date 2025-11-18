@@ -10,13 +10,21 @@ export class RoleGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
 
   async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
-    const expectedRoles = route.data['roles'] as string[];
-    const currentRole = await firstValueFrom(this.auth.getRole());
+  const expectedRoles = route.data['roles'] as string[];
+  
+  // Espera a que la sesión cargue
+  let currentRole = await firstValueFrom(this.auth.getRole());
 
-    if (!expectedRoles.includes(currentRole)) {
-      this.router.navigateByUrl('/tabs/planes'); 
-      return false;
-    }
-    return true;
+  if (!currentRole || currentRole === 'invitado') {
+    await new Promise(res => setTimeout(res, 200));
+    currentRole = await firstValueFrom(this.auth.getRole());
   }
+
+  if (!expectedRoles.includes(currentRole)) {
+    this.router.navigateByUrl('/tabs/planes');
+    return false;
+  }
+
+  return true;
+}
 }

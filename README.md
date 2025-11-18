@@ -152,7 +152,9 @@ De esa forma, la UI se adapte a los permisos de cada tipo de usuario.
 
 2) login.page: Permite entrar con email/contraseña.
 
-3) registro.page: Registra al usuario y lo crea en tabla usuarios con rol “usuario_registrado”.4
+3) registro.page: Registra al usuario y lo crea en tabla usuarios con rol “usuario_registrado”.
+
+4) recuperar.page: Permite al usuario recuperar su contraseña.
 
 4) mis-contrataciones.page: Muestra las contrataciones del usuario.
 
@@ -175,6 +177,7 @@ Estas paginas se crean usando los siguientes comandos:
 
 - _ionic g page pages/inicio --standalone_
 - _ionic g page pages/registro --standalone_
+- _ionic g page pages/recuperar --standalone_
 - _ionic g page pages/login --standalone_
 - _ionic g page pages/miscontrataciones --standalone_
 - _ionic g page pages/miscontrataciones --standalone_

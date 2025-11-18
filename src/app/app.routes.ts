@@ -27,6 +27,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/registro/registro.page').then( m => m.RegistroPage)
   },
   {
+    path: 'recuperar',
+    loadComponent: () => import('./pages/recuperar/recuperar.page').then( m => m.RecuperarPage)
+  },
+  {
     path: 'miscontrataciones',
     loadComponent: () => import('./pages/miscontrataciones/miscontrataciones.page').then( m => m.MisContratacionesPage)
   },

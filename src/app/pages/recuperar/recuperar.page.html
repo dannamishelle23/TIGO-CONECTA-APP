@@ -1,0 +1,50 @@
+<ion-content class="recuperar-background">
+
+  <div class="container">
+
+    <div class="recuperar-card">
+
+      <h1 class="title">Recuperar Contraseña</h1>
+      <p class="subtitle">Ingresa tu correo electrónico para recibir un enlace de recuperación</p>
+
+      <!-- Mensaje de éxito -->
+      <div *ngIf="enviado" class="success-message">
+        <p>✓ Se ha enviado un enlace de recuperación a tu correo electrónico.</p>
+        <p class="small-text">Por favor revisa tu bandeja de entrada y sigue las instrucciones.</p>
+      </div>
+
+      <!-- Mensaje de error -->
+      <div *ngIf="error && !enviado" class="error-message">
+        <p>{{ error }}</p>
+      </div>
+
+      <!-- Formulario -->
+      <form *ngIf="!enviado" (ngSubmit)="recuperarContrasena()">
+
+        <ion-item class="input-item">
+          <ion-icon name="mail-outline" slot="start"></ion-icon>
+          <ion-input
+            type="email"
+            placeholder="Correo electrónico"
+            [(ngModel)]="email"
+            name="email"
+            required>
+          </ion-input>
+        </ion-item>
+
+        <ion-button expand="block" class="btn-recuperar" type="submit" [disabled]="cargando">
+          {{ cargando ? 'Enviando...' : 'Enviar enlace de recuperación' }}
+        </ion-button>
+
+      </form>
+
+      <!-- Link para volver -->
+      <p class="footer-text">
+        <a (click)="volver()" class="link-volver">Volver a iniciar sesión</a>
+      </p>
+
+    </div>
+
+  </div>
+
+</ion-content>

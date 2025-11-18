@@ -31,6 +31,17 @@ export class AuthService {
     return this.role$.asObservable();
   }
 
+  async getUserRole(userId: string) {
+  const { data, error } = await this.supabase.supabase
+    .from('usuarios')
+    .select('*')
+    .eq('id', userId)
+    .single();
+
+  if (error) throw error;
+  return data; 
+  }
+
   /* ---------- AUTENTICACIÓN ---------- */
   async login(email: string, password: string) {
     const { data, error } = await this.supabase.supabase.auth.signInWithPassword({
@@ -41,7 +52,7 @@ export class AuthService {
     return data;
   }
 
-  async register(email: string, password: string) {
+  async register(email: string, password: string, nombres?: string, telefono?: string) {
     // Registro en Auth
     const { data, error } = await this.supabase.supabase.auth.signUp({
       email,
@@ -58,6 +69,8 @@ export class AuthService {
         {
           id: user.id,
           email,
+          nombres,
+          telefono,
           rol: 'usuario_registrado',
         },
       ]);

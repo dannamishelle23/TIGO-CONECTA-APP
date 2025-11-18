@@ -8,6 +8,17 @@
 
       <form (ngSubmit)="registrar()">
 
+         <ion-item class="input-item">
+          <ion-icon name="mail-outline" slot="start"></ion-icon>
+          <ion-input
+            type="nombres"
+            placeholder="Nombre completo"
+            [(ngModel)]="nombres"
+            name="nombres"
+            required>
+          </ion-input>
+        </ion-item>
+
         <ion-item class="input-item">
           <ion-icon name="mail-outline" slot="start"></ion-icon>
           <ion-input
@@ -15,6 +26,17 @@
             placeholder="Correo electrónico"
             [(ngModel)]="email"
             name="email"
+            required>
+          </ion-input>
+        </ion-item>
+
+         <ion-item class="input-item">
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-input
+            type="telefono"
+            placeholder="Telefono"
+            [(ngModel)]="telefono"
+            name="telefono"
             required>
           </ion-input>
         </ion-item>
