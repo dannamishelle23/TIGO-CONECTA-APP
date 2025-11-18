@@ -148,7 +148,7 @@ De esa forma, la UI se adapte a los permisos de cada tipo de usuario.
 
 ### c. Creacion de paginas principales
 
-1) planes.page: Muestra los planes obtenidos desde Supabase usando el PlanService.
+1) inicio: Página de bienvenida. 
 
 2) login.page: Permite entrar con email/contraseña.
 
@@ -158,19 +158,22 @@ De esa forma, la UI se adapte a los permisos de cada tipo de usuario.
 
 5) dashboard-asesor.page: Muestra todos los planes, con botones para editar y eliminar.
 
-6) crear-editar-plan.page: Permite al asesor:
+6) planes.page: Muestra los planes obtenidos desde Supabase usando el PlanService.
+
+7) crear-editar-plan.page: Permite al asesor:
 
 - Crear un nuevo plan o editar uno existente. 
 - Subir imágenes al supabase storage: Si sube una imagen nueva, permite actualizar o eliminar imágenes antiguas
 - Guardar cambios en la tabla planes_moviles
 - Usa el servicio PlanService para realizar el CRUD completo.
 
-7) chat.page: Esta página muestra mensajes, envía mensajes y se actualiza en tiempo real gracias a Supabase Realtime. 
+8) chat.page: Esta página muestra mensajes, envía mensajes y se actualiza en tiempo real gracias a Supabase Realtime. 
 
-8) plan-detalle.page: Esta página muestra datos completos del plan. Se usa para invitados y usuarios registrados y carga imagen desde Supabase Storage.
+9) plan-detalle.page: Esta página muestra datos completos del plan. Se usa para invitados y usuarios registrados y carga imagen desde Supabase Storage.
 
 Estas paginas se crean usando los siguientes comandos:
 
+- _ionic g page pages/inicio --standalone_
 - _ionic g page pages/registro --standalone_
 - _ionic g page pages/login --standalone_
 - _ionic g page pages/miscontrataciones --standalone_
