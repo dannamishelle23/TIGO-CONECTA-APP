@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../core/services/auth';
 import { Router, RouterLink } from '@angular/router';
-import { IonContent, IonItem, IonInput, IonIcon, IonButton, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonInput, IonIcon, IonButton } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -10,12 +10,12 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  imports: [IonContent, IonItem, IonInput, IonIcon, IonButton, IonSelect, IonSelectOption, RouterLink, CommonModule, FormsModule],
+  imports: [IonContent, IonItem, IonInput, IonIcon, IonButton, RouterLink, CommonModule, FormsModule],
 })
 export class LoginPage {
   email = '';
   password = '';
-  role = ''; // se elige en el combo box
+  // role selector removed; routing will use the server-side role
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -26,26 +26,19 @@ export class LoginPage {
       
       if (!user) throw new Error("No se pudo iniciar sesión");
 
-      // 2. OBTENER ROL REAL DESDE SUPABASE
-      const userData = await this.auth.getUserRole(user.id);
+      // 2. OBTENER EL PERFIL/ROL REAL DESDE SUPABASE
+      const profile = await this.auth.loadUserProfile(user.id);
+      const realRole = profile?.rol || 'usuario_registrado';
 
-      if (!userData) throw new Error("Usuario sin rol en la BD");
-
-      const realRole = userData.rol;
-
-      // 3. VALIDAR CON LO QUE ELIGIÓ EN EL COMBO
-      if (this.role !== realRole) {
-        alert("El rol seleccionado no coincide con tu cuenta.");
-        return;
-      }
-
-      // 4. NAVEGAR SEGÚN ROL
+      // 3. NAVEGAR SEGÚN ROL REAL
       if (realRole === 'usuario_registrado') {
         this.router.navigateByUrl('/tabs/planes');
+        return;
       }
 
       if (realRole === 'asesor_comercial') {
         this.router.navigateByUrl('/tabs/dashboard-asesor');
+        return;
       }
 
     } catch (e) {

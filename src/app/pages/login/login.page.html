@@ -33,18 +33,7 @@
         </ion-item>
 
         <!-- ROL SELECTOR -->
-        <ion-item class="input-item">
-          <ion-icon name="person-outline" slot="start"></ion-icon>
-          <ion-select
-            placeholder="Selecciona tu rol"
-            [(ngModel)]="role"
-            name="role"
-            interface="popover"
-            required>
-            <ion-select-option value="usuario_registrado">Cliente Registrado</ion-select-option>
-            <ion-select-option value="asesor_comercial">Asesor Comercial</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <!-- role selector removed: routing will use the server-side role -->
 
         <!-- BOTÓN INICIAR SESIÓN -->
         <ion-button expand="block" class="btn-login" type="submit">

@@ -6,16 +6,25 @@ import { SupabaseService } from './supabase';
   providedIn: 'root',
 })
 export class AuthService {
+
   private user$ = new BehaviorSubject<any>(null);
   private role$ = new BehaviorSubject<string>('invitado');
 
   constructor(private supabase: SupabaseService) {
-    // Detecta cambios de sesión automáticamente
+
+    // Detecta cada cambio de sesión
     this.supabase.supabase.auth.onAuthStateChange(async (event, session) => {
+
       if (session?.user) {
-        const perfil = await this.loadUserProfile(session.user.id);
+        const userId = session.user.id;
+
+        await this.ensureUserProfile(userId, session.user.email!);
+
+        const perfil = await this.loadUserProfile(userId);
+
         this.user$.next(session.user);
         this.role$.next(perfil?.rol || 'usuario_registrado');
+
       } else {
         this.user$.next(null);
         this.role$.next('invitado');
@@ -31,18 +40,7 @@ export class AuthService {
     return this.role$.asObservable();
   }
 
-  async getUserRole(userId: string) {
-  const { data, error } = await this.supabase.supabase
-    .from('usuarios')
-    .select('*')
-    .eq('id', userId)
-    .single();
-
-  if (error) throw error;
-  return data; 
-  }
-
-  /* ---------- AUTENTICACIÓN ---------- */
+  /* -------------------- LOGIN -------------------- */
   async login(email: string, password: string) {
     const { data, error } = await this.supabase.supabase.auth.signInWithPassword({
       email,
@@ -52,29 +50,66 @@ export class AuthService {
     return data;
   }
 
+  /* -------------------- REGISTER -------------------- */
   async register(email: string, password: string, nombres?: string, telefono?: string) {
-    // Registro en Auth
+
     const { data, error } = await this.supabase.supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: '/login',
+        data: {
+          nombres: nombres || '',
+          telefono: telefono || '',
+        }
+      }
     });
 
     if (error) throw error;
 
-    // Crear perfil en tabla usuarios con rol por defecto
-    const user = data.user;
+    // 🔥 IMPORTANTE:
+    // NO intentamos insertar el perfil aquí
+    // Supabase no devuelve `user.id` hasta que se confirma el correo
 
-    if (user) {
-      await this.supabase.supabase.from('usuarios').insert([
-        {
-          id: user.id,
-          email,
-          nombres,
-          telefono,
-          rol: 'usuario_registrado',
-        },
-      ]);
+    return data;
+  }
+
+  /* -------------------- PERFIL -------------------- */
+
+  // Crea perfil si no existe (se llama automáticamente al iniciar sesión)
+  async ensureUserProfile(userId: string, email: string) {
+
+    // Verifica si existe
+    const { data: existing } = await this.supabase.supabase
+      .from('usuarios')
+      .select('id')
+      .eq('id', userId)
+      .maybeSingle();
+
+    if (existing) {
+      return; // Ya existe
     }
+
+    // Si no existe, lo creamos
+    const { error } = await this.supabase.supabase
+      .from('usuarios')
+      .insert([
+        {
+          id: userId,
+          email: email,
+          rol: 'usuario_registrado',
+        }
+      ]);
+
+    if (error) console.error('Error creando perfil:', error);
+  }
+
+  async loadUserProfile(userId: string) {
+    const { data } = await this.supabase.supabase
+      .from('usuarios')
+      .select('*')
+      .eq('id', userId)
+      .single();
 
     return data;
   }
@@ -82,15 +117,4 @@ export class AuthService {
   async logout() {
     await this.supabase.supabase.auth.signOut();
   }
-
-  /* ---------- PERFIL ---------- */
-  async loadUserProfile(userId: string) {
-    const { data } = await this.supabase.supabase
-      .from('usuarios')
-      .select('*')
-      .eq('id', userId)
-      .single();
-    return data;
-  }
 }
-

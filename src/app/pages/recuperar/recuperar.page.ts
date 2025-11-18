@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { IonContent, IonItem, IonInput, IonIcon, IonButton } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,7 +10,7 @@ import { SupabaseService } from '../../core/services/supabase';
   selector: 'app-recuperar',
   templateUrl: './recuperar.page.html',
   styleUrls: ['./recuperar.page.scss'],
-  imports: [IonContent, IonItem, IonInput, IonIcon, IonButton, RouterLink, CommonModule, FormsModule],
+  imports: [IonContent, IonItem, IonInput, IonIcon, IonButton, CommonModule, FormsModule],
 })
 export class RecuperarPage {
   email = '';
